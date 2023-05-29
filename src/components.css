@@ -1,0 +1,22 @@
+.box {
+    height: 300px;
+    width: 200px;
+  }
+  
+.button {
+    color: #000;
+    cursor: pointer;
+  }
+  
+.button:hover {
+    color: #0056b3;
+  }
+  
+.style_card {
+    background-color: #000; /* Color de fondo personalizado */
+    width: '18rem'
+  }
+  
+.center_div{
+    text-align: 'center'
+  }

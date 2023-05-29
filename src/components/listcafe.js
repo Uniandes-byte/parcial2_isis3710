@@ -1,10 +1,16 @@
 import Table from 'react-bootstrap/Table';
+import DetailCafe from './detailcafe';
+import { FormattedMessage } from "react-intl";
 
 const { useEffect, useState } = require("react");
 
-function ListCafe() {
+function ListCafe(props) {
+
 
 const [cafes, setCafes] = useState([]);
+const [idCafe, setIdCafe] = useState([]);
+const [showDetail, setShowDetail] = useState(false);
+const [details, setDetails] = useState([]);
 
    useEffect(()=>{
        const URL = "http://localhost:3001/cafes";
@@ -14,28 +20,60 @@ const [cafes, setCafes] = useState([]);
        })
    }, []);
 
+   const handleClick = (id) => {
+    setIdCafe(id)
+
+    const URL = "http://localhost:3001/cafes/"+id;
+        fetch(URL)
+            .then(data => data.json())
+            .then(data => {
+            setDetails(data);
+            })
+
+    setShowDetail(true);
+    
+   };
+
   return (
-    <Table striped bordered hover>
-      <thead>
+    <div style={{ display: 'flex' }}>
+    <div style={{ width: '850px', height: '100px', marginRight: '70px'}}>
+    <table className="table">
+      <thead className='table-dark'>
         <tr>
           <th>#</th>
-          <th>Nombre</th>
-          <th>Tipo</th>
-          <th>Región</th>
+          <th>
+            <FormattedMessage id="Name"/>
+          </th>
+          <th>
+            <FormattedMessage id="Type"/>
+          </th>
+          <th>
+            <FormattedMessage id="Region"/>
+          </th>
         </tr>
       </thead>
       <tbody>
       {cafes.map((dato, index) => (
             <tr key={index}>
-                <td>{index}</td>
-              <td>{dato.nombre}</td>
+              <td> <b>{dato.id}</b></td>
+              <td>  
+                <p className="button" name="id" value={dato.id} onClick={() => handleClick(dato.id)}>
+                {dato.nombre}
+                </p>
+              </td>
               <td>{dato.tipo}</td>
               <td>{dato.region}</td>
             </tr>
           ))}
       </tbody>
-    </Table>
-  );
-}
+    </table>
+    </div>
+    <div>
+    {showDetail && <DetailCafe data={details} />}
+    </div>
+    </div>
+  )
+
+};
 
 export default ListCafe;

@@ -11,6 +11,8 @@ function NavBar() {
          <h1>El aroma mágico</h1>
           <hr></hr>
           <img src={banner} alt={"logo"}/> 
+          <hr></hr>
+          
           </Navbar.Brand>
        </Container>
      </Navbar>
